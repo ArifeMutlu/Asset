@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿
+using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace WebExperience.Test.Controllers
 {
@@ -10,5 +13,7 @@ namespace WebExperience.Test.Controllers
         // Clicking an asset should navigate the user to a detail page showing all properties
         // Any data repository is permitted  
         // Use a client MVVM framework
+       
+      
     }
 }
