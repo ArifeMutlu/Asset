@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using System.Security.Claims;
@@ -30,5 +31,6 @@ namespace WebExperience.Test.Models
         {
             return new ApplicationDbContext();
         }
+       
     }
 }
