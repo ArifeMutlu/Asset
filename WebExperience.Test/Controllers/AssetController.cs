@@ -1,7 +1,11 @@
 ﻿
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.UI.WebControls;
+using WebExperience.Test.Models;
+using WebExperience.Test.Models.dtos;
 
 namespace WebExperience.Test.Controllers
 {
@@ -13,7 +17,76 @@ namespace WebExperience.Test.Controllers
         // Clicking an asset should navigate the user to a detail page showing all properties
         // Any data repository is permitted  
         // Use a client MVVM framework
-       
-      
+
+        ApplicationDbContext _db;
+        public AssetController()
+        {
+            _db = new ApplicationDbContext();
+        }
+
+        [HttpGet]
+        public IEnumerable<Assetdto> GetAssets()
+        {
+            var asset= _db.assets.Select(p=>new Assetdto {
+                asset_id = p.asset_id,
+                country = p.country,
+                created_by = p.created_by,
+                description = p.description,
+                email = p.email,
+                file_name = p.file_name,
+                mime_type = p.mime_type
+            }).ToList();
+            return asset;
+        }
+
+        [HttpPost]
+        public Asset CreateAsset(Assetdto assetdto)
+        {
+
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+            Asset asset = new Asset();
+            Mapper(assetdto, asset);
+            _db.assets.Add(asset);
+            _db.SaveChanges();
+            return asset;
+        }
+
+        [HttpPut]
+        public void UpdateAsset(Guid id, Assetdto assetdto)
+        {
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+
+            var assetdb = _db.assets.SingleOrDefault(a => a.asset_id == id);
+            if (assetdb == null)
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
+
+            Mapper(assetdto, assetdb);
+            _db.SaveChanges();
+        }
+
+        [HttpDelete]
+        public void DeleteAsset(Guid id)
+        {
+            var assetdb = _db.assets.SingleOrDefault(a => a.asset_id == id);
+            if (assetdb == null)
+                throw new HttpResponseException(System.Net.HttpStatusCode.NotFound);
+            _db.assets.Remove(assetdb);
+            _db.SaveChanges();
+        }
+
+        //we can use automapper for this
+        private void Mapper(Assetdto assetdto, Asset asset)
+        {
+            asset.asset_id = assetdto.asset_id;
+            asset.country = assetdto.country;
+            asset.created_by = assetdto.created_by;
+            asset.description = assetdto.description;
+            asset.email = assetdto.email;
+            asset.file_name = assetdto.file_name;
+            asset.mime_type = assetdto.mime_type;
+        }
+
     }
 }

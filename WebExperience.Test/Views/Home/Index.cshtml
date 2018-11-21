@@ -33,8 +33,8 @@
             <td>
                 <button class="w3-btn w3-ripple" ng-click="editUser(user.id)">&#9998; Edit</button>
             </td>
-            <td>{{ asset.fName }}</td>
-            <td>{{ asset.lName }}</td>
+            <td>{{ asset.asset_id }}</td>
+            <td>{{ asset.file_name }}</td>
         </tr>
     </table>
     <br>
@@ -43,7 +43,9 @@
 <script>
     var app = angular.module('myApp', []);
     app.controller('AssetCtrl', function ($scope, $http) {
-        $http.get("/Asset/GetAsset").then(function (response) {
+
+        $http.get("/Asset/GetAssets").then(function (response) {
+            debugger;
             $scope.assets = response.data.records;
         });
     });
