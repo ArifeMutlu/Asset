@@ -29,47 +29,28 @@ namespace WebExperience.Test.Controllers
         {
             _db = new ApplicationDbContext();
         }
-        protected HttpResponseMessage ToJson(dynamic obj)
-        {
-            var response = Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
-            return response;
-        }
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult Get()
+    
+        [System.Web.Http.Route("api/Get")]
+        public List<Asset> Get()
         {
             var query = _db.assets.ToList();
-            return Ok(query);
+            return query;
         }
-        //public HttpResponseMessage Get()
-        //{
-        //    var asset = _db.assets.Select(p => new Assetdto
-        //    {
-        //        asset_id = p.asset_id,
-        //        country = p.country,
-        //        created_by = p.created_by,
-        //        description = p.description,
-        //        email = p.email,
-        //        file_name = p.file_name,
-        //        mime_type = p.mime_type
-        //    }).ToList();
-
-        //    return new HttpResponseMessage()
-        //    {
-        //        Content = new StringContent(JArray.FromObject(asset).ToString(), Encoding.UTF8, "application/json")
-        //    };
-        //}
-        [System.Web.Http.HttpPost]
-        public Asset CreateAsset(Assetdto assetdto)
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("api/Get/{id}")]
+        public Asset Get(Guid id)
         {
-
+            var query = _db.assets.FirstOrDefault(x=>x.asset_id==id);
+            return query;
+        }
+        [System.Web.Http.HttpPost]
+        public Asset Create([FromBody]Asset data)
+        {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-            Asset asset = new Asset();
-            Mapper(assetdto, asset);
-            _db.assets.Add(asset);
+            _db.assets.Add(data);
             _db.SaveChanges();
-            return asset;
+            return data;
         }
 
         [System.Web.Http.HttpPut]

@@ -1,4 +1,6 @@
-﻿namespace GeneralKnowledge.Test.App.Tests
+﻿using System.Runtime.Serialization;
+
+namespace GeneralKnowledge.Test.App.Tests
 {
     /// <summary>
     /// Basic data retrieval from JSON test
@@ -10,7 +12,7 @@
         public void Run()
         {
             var jsonData = Resources.SamplePoints;
-
+            var dat=
             // TODO: 
             // Determine for each parameter stored in the variable below, the average value, lowest and highest number.
             // Example output

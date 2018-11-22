@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<Script>
+    var uri = '/api/Get';
+    $(document).ready(function () {
+        debugger;
+        // Send an AJAX request
+        $.getJSON(uri)
+            .done(function (data) {
+                debugger;   
+                // On success, 'data' contains a list of products.
+                $.each(data, function (key, item) {
+                    // Add a list item for the product.
+                    $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                });
+            });
+    });
+</Script>
