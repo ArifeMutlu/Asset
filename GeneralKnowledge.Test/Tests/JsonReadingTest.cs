@@ -94,7 +94,7 @@ namespace GeneralKnowledge.Test.App.Tests
                 Console.WriteLine(jsonResult.Parameter + "-" + jsonResult.Low.ToString("N2") + "-" + jsonResult.Avg.ToString("N2") + "-" + jsonResult.Max.ToString("N2"));
                 
             }
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }
