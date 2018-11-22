@@ -31,7 +31,6 @@ namespace WebExperience.Test.Models
         {
             return new ApplicationDbContext();
         }
-        public DbSet<Asset> assets { get; set; }
 
 
     }
