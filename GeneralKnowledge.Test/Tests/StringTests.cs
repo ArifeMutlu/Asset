@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GeneralKnowledge.Test.App.Tests
 {
@@ -25,15 +26,37 @@ namespace GeneralKnowledge.Test.App.Tests
             {
                 Console.WriteLine(string.Format("{0} > {1}: {2}", word, possibleAnagram, possibleAnagram.IsAnagram(word)));
             }
+
+            //Console.ReadKey();
+
         }
 
         private void GetUniqueCharsAndCount()
         {
             var word = "xxzwxzyzzyxwxzyxyzyxzyxzyzyxzzz";
+            char[] strarray = new char[word.Length + 1];
+            Dictionary<char, int> lcCharSet = new Dictionary<char, int>();
 
-            // TODO
-            // Write an algorithm that gets the unique characters of the word below 
-            // and counts the number of occurrences for each character found
+            strarray = word.ToCharArray();
+            foreach (char item in strarray)
+            {
+                if (!lcCharSet.ContainsKey(item))
+                {
+                    lcCharSet.Add(item, 1);
+                }
+                else
+                {
+                    lcCharSet[item] = lcCharSet[item] + 1;
+                }
+
+            }
+
+            foreach (var item in lcCharSet)
+            {
+                Console.WriteLine(item.Key + "-" + item.Value);
+            }
+
+            //Console.ReadKey();
         }
     }
 
@@ -43,8 +66,21 @@ namespace GeneralKnowledge.Test.App.Tests
         {
             // TODO
             // Write logic to determine whether a is an anagram of b
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
+                return false;
+            if (a.Length != b.Length)
+                return false;
 
-            return false;
+            foreach (char c in b)
+            {
+                int ix = a.IndexOf(c);
+                if (ix >= 0)
+                    a = a.Remove(ix, 1);
+                else
+                    return false;
+            }
+
+            return string.IsNullOrEmpty(a);
         }
     }
 }

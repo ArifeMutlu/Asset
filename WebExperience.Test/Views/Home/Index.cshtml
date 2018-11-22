@@ -1,51 +1,23 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    table, th, td {
-        border: 1px solid grey;
-        border-collapse: collapse;
-        padding: 5px;
-    }
 
-        table tr:nth-child(odd) {
-            background-color: #f1f1f1;
-        }
 
-        table tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<body ng-app="myApp" ng-controller="AssetCtrl">
-
-<div class="w3-container">
-
-    <h3>Users</h3>
-
-    <table class="w3-table w3-bordered w3-striped">
-        <tr>
-            <th>Edit</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-        </tr>
-        <tr ng-repeat="asset in assets">
-            <td>
-                <button class="w3-btn w3-ripple" ng-click="editUser(user.id)">&#9998; Edit</button>
-            </td>
-            <td>{{ asset.fName }}</td>
-            <td>{{ asset.lName }}</td>
-        </tr>
-    </table>
-    <br>
-</div>
-
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('AssetCtrl', function ($scope, $http) {
-        $http.get("/Asset/GetAsset").then(function (response) {
-            $scope.assets = response.data.records;
-        });
+<Script>
+    var uri = '/Home/Get';
+    $(document).ready(function () {
+        debugger;
+        // Send an AJAX request
+        $.getJSON(uri)
+            .done(function (data) {
+                debugger;   
+                // On success, 'data' contains a list of products.
+                $.each(data, function (key, item) {
+                    // Add a list item for the product.
+                    $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                });
+            });
     });
-</script>
-</body>
+</Script>
