@@ -29,26 +29,46 @@ namespace WebExperience.Test.Controllers
         {
             _db = new ApplicationDbContext();
         }
-    
+
         [System.Web.Http.Route("api/Get")]
         public List<Asset> Get()
         {
-            var query = _db.assets.ToList();
+            var query = _db.assets.Take(10).ToList();
             return query;
         }
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("api/Get/{id}")]
         public Asset Get(Guid id)
         {
-            var query = _db.assets.FirstOrDefault(x=>x.asset_id==id);
+            var query = _db.assets.FirstOrDefault(x => x.asset_id == id);
             return query;
         }
         [System.Web.Http.HttpPost]
-        public Asset Create([FromBody]Asset data)
+        [System.Web.Http.Route("api/Create")]
+
+        public Asset Create(Asset data)
         {
-            if (!ModelState.IsValid)
-                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-            _db.assets.Add(data);
+            //if (!ModelState.IsValid)
+            //    throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+
+            if (data.asset_id.ToString() == "00000000-0000-0000-0000-000000000000")
+            {
+                _db.assets.Add(data);
+            }
+            else
+            {
+                var model = _db.assets.FirstOrDefault(x => x.asset_id == data.asset_id);
+                if (model != null)
+                {
+                    model.mime_type = data.mime_type;
+                    model.country = data.country;
+                    model.created_by = data.created_by;
+                    model.description = data.description;
+                    model.email = data.email;
+                    model.file_name = data.file_name;
+                }
+            }
+
             _db.SaveChanges();
             return data;
         }

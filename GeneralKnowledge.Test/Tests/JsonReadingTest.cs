@@ -12,7 +12,7 @@ namespace GeneralKnowledge.Test.App.Tests
         public void Run()
         {
             var jsonData = Resources.SamplePoints;
-            var dat=
+          
             // TODO: 
             // Determine for each parameter stored in the variable below, the average value, lowest and highest number.
             // Example output

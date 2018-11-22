@@ -25,7 +25,7 @@
         <h3>Users</h3>
 
         <br />
-        <table class="w3-table w3-bordered w3-striped">
+        <table class="">
             <tr>
                 <th></th>
                 <th>asset_id</th>
@@ -34,8 +34,8 @@
             </tr>
             <tr ng-repeat="asset in assets">
                 <td>
-                    <button class="w3-btn w3-ripple" ng-click="editAsset(asset.asset_id)">&#9998; Edit</button>
-                    <button class="w3-btn w3-ripple" ng-click="detailAsset(asset.asset_id)"> Detail</button>
+                    <button class="" ng-click="editAsset(asset.asset_id)">&#9998; Edit</button>
+                    <button class="" ng-click="detailAsset(asset.asset_id)"> Detail</button>
                 </td>
                 <td>{{ asset.asset_id }}</td>
                 <td>{{ asset.file_name }}</td>
@@ -91,7 +91,6 @@
         $scope.incomplete = false;
         $scope.hideform = true;
         $scope.editAsset = function (id) {
-            debugger;
             $scope.hideform = false;
             if (id == 'new') {
                 $scope.edit = true;
@@ -130,8 +129,6 @@
                 $scope.country = response.data.country;
                 $scope.description = response.data.description;
             });
-
-
         };
 
         $scope.submit = function () {
@@ -147,8 +144,7 @@
                 description: this.description
             }
             debugger;
-            var body = "asset_id=" + data.asset_id + "&file_name=" + data.file_name + "&mime_type=" + data.mime_type;
-            $http.post('/api/Create', data);
+            $http.post('/api/Create',data);
         };
 
     });
