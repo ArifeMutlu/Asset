@@ -9,6 +9,10 @@ namespace WebExperience.Test.Controllers
             
             return View();
         }
-      
+      public JsonResult Get()
+      {
+          var model=new AssetController();
+          return Json(model.Get());
+      }
     }
 }

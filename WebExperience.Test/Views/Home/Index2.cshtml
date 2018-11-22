@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    
+}
+<style>
+    table, th, td {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+</style>
+@*<script src="~/Scripts/angular.min.js"></script>
+<body ng-app="myApp" ng-controller="AssetCtrl">
+
+<div class="w3-container">
+    <table class="w3-table w3-bordered w3-striped">
+        <tr>
+            <th>Edit</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </tr>
+        <tr ng-repeat="asset in assets">
+            <td>
+                <button class="w3-btn w3-ripple" ng-click="editUser(user.id)">&#9998; Edit</button>
+            </td>
+            <td>{{ asset.asset_id }}</td>
+            <td>{{ asset.file_name }}</td>
+        </tr>
+    </table>
+    <br>
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('AssetCtrl', function ($scope, $http) {
+        debugger;
+        $http.get("api/Asset/Get").then(function (response) {
+            debugger;
+           // $scope.assets = response.data;
+        });
+    });
+</script>
+</body>*@

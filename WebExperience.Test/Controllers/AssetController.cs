@@ -3,7 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Web.Http;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WebExperience.Test.Models;
 using WebExperience.Test.Models.dtos;
 
@@ -23,23 +29,37 @@ namespace WebExperience.Test.Controllers
         {
             _db = new ApplicationDbContext();
         }
-
-        [HttpGet]
-        public IEnumerable<Assetdto> GetAssets()
+        protected HttpResponseMessage ToJson(dynamic obj)
         {
-            var asset= _db.assets.Select(p=>new Assetdto {
-                asset_id = p.asset_id,
-                country = p.country,
-                created_by = p.created_by,
-                description = p.description,
-                email = p.email,
-                file_name = p.file_name,
-                mime_type = p.mime_type
-            }).ToList();
-            return asset;
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
+            return response;
         }
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Get()
+        {
+            var query = _db.assets.ToList();
+            return Ok(query);
+        }
+        //public HttpResponseMessage Get()
+        //{
+        //    var asset = _db.assets.Select(p => new Assetdto
+        //    {
+        //        asset_id = p.asset_id,
+        //        country = p.country,
+        //        created_by = p.created_by,
+        //        description = p.description,
+        //        email = p.email,
+        //        file_name = p.file_name,
+        //        mime_type = p.mime_type
+        //    }).ToList();
 
-        [HttpPost]
+        //    return new HttpResponseMessage()
+        //    {
+        //        Content = new StringContent(JArray.FromObject(asset).ToString(), Encoding.UTF8, "application/json")
+        //    };
+        //}
+        [System.Web.Http.HttpPost]
         public Asset CreateAsset(Assetdto assetdto)
         {
 
@@ -52,7 +72,7 @@ namespace WebExperience.Test.Controllers
             return asset;
         }
 
-        [HttpPut]
+        [System.Web.Http.HttpPut]
         public void UpdateAsset(Guid id, Assetdto assetdto)
         {
             if (!ModelState.IsValid)
@@ -66,7 +86,7 @@ namespace WebExperience.Test.Controllers
             _db.SaveChanges();
         }
 
-        [HttpDelete]
+        [System.Web.Http.HttpDelete]
         public void DeleteAsset(Guid id)
         {
             var assetdb = _db.assets.SingleOrDefault(a => a.asset_id == id);
