@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+using WebExperience.Test.Models;
 
 namespace WebExperience.Test.Controllers
 {
@@ -9,6 +11,16 @@ namespace WebExperience.Test.Controllers
 
             return View();
         }
-      
+        public ActionResult Asset()
+        {
+            return View();
+        }
+
+        public List<Asset> Get()
+        {
+            var model=new AssetController();
+            return model.Get();
+        }
+
     }
 }

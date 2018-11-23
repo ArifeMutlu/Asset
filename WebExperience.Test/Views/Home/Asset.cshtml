@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "Asset";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<WebExperience.Test.Models.Asset>
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+<table id="assets" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>Asset Id</th>
+    </tr>
+    </thead>
+    @*<tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.asset_id</td>
+                <td>@item.file_name</td>
+            </tr>
+        }
+    </tbody>*@
+</table>
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script>
+    //$("#assets").dataTable();
+    $(document).ready(function () {
+        //$('#assets').DataTable({
+        //    ajax: {
+        //        url:"Get"
+        //    },
+        //    colums: [
+        //        {
+        //            data: "asset_id"
+
+        //        },
+        //        {
+        //            data: "file_name"
+
+        //        }
+        //    ]
+        //});
+            var complete = $('#assets').DataTable(
+                {
+
+                    "serverSide": true,
+                    "destroy": true,
+                    "processing": true,
+                    "ajax":
+                    {
+                        url: "http://localhost:2933/Api/Get",
+                    method: "POST"
+                },
+                "columns": [
+                    { "data": "asset_id" }
+
+                ]
+            }
+
+        );
+    });
+
+
+</script>

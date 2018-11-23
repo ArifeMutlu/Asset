@@ -34,5 +34,6 @@ namespace WebExperience.Test.Models.dtos
 
         [Required]
         public string description { get; set; }
+        public bool isNew { get; set; }
     }
 }
