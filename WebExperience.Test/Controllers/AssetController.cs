@@ -33,7 +33,7 @@ namespace WebExperience.Test.Controllers
         [System.Web.Http.Route("api/Get")]
         public List<Asset> Get()
         {
-            var query = _db.assets.Take(10).ToList();
+            var query = _db.assets.Take(20).ToList();
             return query;
         }
         [System.Web.Http.HttpGet]

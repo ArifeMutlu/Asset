@@ -23,25 +23,19 @@
     <div class="w3-container">
 
         <h3>Users</h3>
-
         <br />
-        <table class="">
-            <tr>
-                <th></th>
-                <th>asset_id</th>
-                <th>file_name</th>
-                <th>mime_type</th>
-            </tr>
-            <tr ng-repeat="asset in assets">
+        <table class="table">
+            <tr ng-repeat="row in assets.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
                 <td>
-                    <button class="" ng-click="editAsset(asset.asset_id)">&#9998; Edit</button>
-                    <button class="" ng-click="detailAsset(asset.asset_id)"> Detail</button>
+                    <button class="" ng-click="editAsset(row.asset_id)">&#9998; Edit</button>
+                    <button class="" ng-click="detailAsset(row.asset_id)"> Detail</button>
                 </td>
-                <td>{{ asset.asset_id }}</td>
-                <td>{{ asset.file_name }}</td>
-                <td>{{ asset.mime_type }}</td>
+                <td>{{row.file_name}}</td>
+                <td>{{row.mime_type}}</td>
             </tr>
         </table>
+        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
+       @* <pre>The selected page no: {{currentPage}}</pre>*@
         <br>
         <button class="w3-btn w3-green w3-ripple " ng-click="editAsset('new')">&#9998; Create New User</button>
         <form ng-hide="hideform" ng-submit="submit()">
@@ -67,14 +61,13 @@
             <input class="w3-input w3-border" type="text" ng-model="description" ng-disabled="!edit" placeholder="description">
 
             <br>
-            @*<button type="submit" class="w3-btn w3-green w3-ripple" ng-click="editdataAsset('new')" ng-disabled="!edit">&#10004; Save Changes</button>*@
             <input ng-disabled="!edit" type="submit" id="submit" value="Submit" />
         </form>
 
     </div>
 </body>
 <script>
-
+   
     angular.module('myApp', []).controller('AssetCtrl', function ($scope, $http) {
         $scope.asset_id = '';
         $scope.file_name = '';
@@ -117,7 +110,6 @@
             }
         };
         $scope.detailAsset = function (id) {
-            debugger;
             $scope.hideform = false;
             $http.get("/api/Get/" + id).then(function (response) {
                 $scope.edit = false;
@@ -132,8 +124,6 @@
         };
 
         $scope.submit = function () {
-
-            var a = this;
             var data = {
                 asset_id: this.asset_id,
                 file_name: this.file_name,
@@ -143,9 +133,38 @@
                 country: this.country,
                 description: this.description
             }
+            $http.post('/api/Create', data).then(function (response) {
+                $http.get("/api/Get").then(function (response) {
+                    $scope.assets = response.data;
+                });
+            });
+           
+        };
+        
+        $http.get("/api/Get").then(function (response) {
             debugger;
-            $http.post('/api/Create',data);
+            $scope.assets = response.data;
+            $scope.totalItems = $scope.assets.length;
+
+        });
+        $scope.viewby = 10;
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = $scope.viewby;
+        $scope.maxSize = 5; //Number of pager buttons to show
+
+        $scope.setPage = function (pageNo) {
+            $scope.currentPage = pageNo;
         };
 
+        $scope.pageChanged = function () {
+            console.log('Page changed to: ' + $scope.currentPage);
+        };
+
+        $scope.setItemsPerPage = function (num) {
+            $scope.itemsPerPage = num;
+            $scope.currentPage = 1; //reset to first page
+        }
     });
+
+
 </script>
