@@ -8,9 +8,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<link href="~/Scripts/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert/sweetalert.js"></script>
 <br />
 
+
+<a class="btn btn-primary" href="/Home/AssetCreate" role="button">Create </a>
+<br/>
 <table id="example" class="display" cellspacing="0">
     <thead>
         <tr>
@@ -40,7 +44,8 @@
                 {
                     "data": "asset_id",
                     render: function (data,type,asset) {
-                        return "<a href='/Home/Asset/"+asset.asset_id+"'> Edit</button>";
+                        return "<a href='/Home/Asset/" + asset.asset_id + "'> Edit</> <a href='/Home/AssetDetail/" + asset.asset_id + "'> Detail</>" +
+                            " ";
                     }
                 },
                 { "data": "file_name", "name": "file_name" },
@@ -52,8 +57,21 @@
         });
     });
 
-    function GetAsset(id) {
-        debugger;
-        location.href = "/Home/Asset/" + id;
-    }
+    function deletePersonelCost(Id, PersonelId, Cost, CostTypeName) {
+        swal({
+            title: "Uyarı",
+            text: '' + Cost + ' TL tutarındaki ' + CostTypeName + ' özlük hakkını silmek istediğinizden emin misiniz ?',
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            cancelButtonText: "İptal"
+        }, function () {
+            ajaxMethods.post("/Personel/DeletePersonelCost/" + Id, function (response) {
+                if (response) {
+                    swal("", response.Message, "success");
+                    personel.getPersonelCosts(PersonelId, 1);
+                }
+            });
+        });
+    };
 </script>

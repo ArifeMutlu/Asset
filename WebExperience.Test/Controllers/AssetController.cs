@@ -40,20 +40,18 @@ namespace WebExperience.Test.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("api/Get/{id}")]
-        public Asset Get(Guid id)
+        public Assetdto Get(Guid id)
         {
             var query = _db.assets.FirstOrDefault(x => x.asset_id == id);
-            return query;
+            var asset=new Assetdto();
+            MapperDto(query,asset);
+            return asset;
         }
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/Create")]
 
         public Asset Create(Assetdto data)
         {
-            if (data.isNew)
-            {
-                data.asset_id = Guid.NewGuid();
-            }
             if (!ModelState.IsValid)
                 throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
             var asset=new Asset();
@@ -115,6 +113,15 @@ namespace WebExperience.Test.Controllers
             asset.file_name = assetdto.file_name;
             asset.mime_type = assetdto.mime_type;
         }
-
+        private void MapperDto(Asset asset, Assetdto assetDto)
+        {
+            assetDto.asset_id = asset.asset_id;
+            assetDto.country = asset.country;
+            assetDto.created_by = asset.created_by;
+            assetDto.description = asset.description;
+            assetDto.email = asset.email;
+            assetDto.file_name = asset.file_name;
+            assetDto.mime_type = asset.mime_type;
+        }
     }
 }

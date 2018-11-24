@@ -472,6 +472,17 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sweetalert\modules\default-params.js" />
+    <Content Include="Scripts\sweetalert\modules\handle-click.js" />
+    <Content Include="Scripts\sweetalert\modules\handle-dom.js" />
+    <Content Include="Scripts\sweetalert\modules\handle-key.js" />
+    <Content Include="Scripts\sweetalert\modules\handle-swal-dom.js" />
+    <Content Include="Scripts\sweetalert\modules\injected-html.js" />
+    <Content Include="Scripts\sweetalert\modules\set-params.js" />
+    <Content Include="Scripts\sweetalert\modules\utils.js" />
+    <Content Include="Scripts\sweetalert\sweetalert-dev.js" />
+    <Content Include="Scripts\sweetalert\sweetalert.css" />
+    <Content Include="Scripts\sweetalert\sweetalert.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -522,6 +533,8 @@
     <Content Include="Views\Home\Index_jquerydatatable.cshtml" />
     <Content Include="Views\Home\Angular.cshtml" />
     <Content Include="Views\Home\Asset.cshtml" />
+    <Content Include="Views\Home\AssetDetail.cshtml" />
+    <Content Include="Views\Home\AssetCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

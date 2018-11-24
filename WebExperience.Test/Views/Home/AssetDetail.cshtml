@@ -1,0 +1,46 @@
+﻿@model WebExperience.Test.Models.dtos.Assetdto
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<br/>
+<div class="container">
+    <form id="assetId">
+        <div class="form-group">
+            <label for="file_name">File Name:</label>
+            <input type="text" class="form-control" value="@Model.file_name"  disabled="disabled" id="file_name" name="file_name">
+        </div>
+        <div class="form-group">
+            <label for="mime_type">Mime Type:</label>
+            <input type="text" class="form-control" value="@Model.mime_type" disabled="disabled"  id="mime_type" name="mime_type">
+        </div>
+        <div class="form-group">
+            <label for="created_by">Created By:</label>
+            <input type="text" class="form-control" value="@Model.created_by" disabled="disabled"  id="created_by" name="created_by">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" value="@Model.email" disabled="disabled"  id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="country">country:</label>
+            <input type="text" class="form-control" value="@Model.country" disabled="disabled"  id="country" name="country">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" class="form-control" disabled="disabled"  > @Model.description</textarea>
+        </div>
+    </form>
+</div>
+
+</body>
+
+<script>
+    function Save() {
+        
+    }
+</script>
