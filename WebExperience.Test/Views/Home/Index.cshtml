@@ -1,15 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "Index_jquerydatatable";
+    ViewBag.Title = "Asset";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
 
-<h3>jQuery DataTables</h3>
-<a href="https://www.gyrocode.com/articles/tag/jquery-datatables/">See more articles about jQuery DataTables</a> on <a href="https://www.gyrocode.com/articles/">Gyrocode.com</a><hr>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<p>
-    <button type="button" id="btn-reload">Reload</button>
-</p>
+<br />
 
 <table id="example" class="display" cellspacing="0">
     <thead>
@@ -37,7 +37,10 @@
                 "dataSrc": ""
             },
             "columns": [
-                { "data": "asset_id", "name": "asset_id" },
+                { "data": "asset_id", "name": "asset_id",render: function(data,type,asset) {
+                        return "<a href='/Home/Asset/" + asset.asset_id + "'>" + asset.asset_id + "/>";
+                    }
+                },
                 { "data": "file_name", "name": "file_name" },
                 { "data": "mime_type", "name": "mime_type" },
                 { "data": "created_by", "name": "created_by" },
