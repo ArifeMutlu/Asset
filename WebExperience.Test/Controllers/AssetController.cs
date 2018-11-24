@@ -48,31 +48,36 @@ namespace WebExperience.Test.Controllers
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("api/Create")]
 
-        public Asset Create(Asset data)
+        public Asset Create(Assetdto data)
         {
-            //if (!ModelState.IsValid)
-            //    throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
-
-            if (data.asset_id.ToString() == "00000000-0000-0000-0000-000000000000")
+            if (data.isNew)
             {
-                _db.assets.Add(data);
+                data.asset_id = Guid.NewGuid();
+            }
+            if (!ModelState.IsValid)
+                throw new HttpResponseException(System.Net.HttpStatusCode.BadRequest);
+            var asset=new Asset();
+            if (data.isNew)
+            {
+                Mapper(data, asset);
+                _db.assets.Add(asset);
             }
             else
             {
-                var model = _db.assets.FirstOrDefault(x => x.asset_id == data.asset_id);
-                if (model != null)
+                asset = _db.assets.FirstOrDefault(x => x.asset_id == data.asset_id);
+                if (asset != null)
                 {
-                    model.mime_type = data.mime_type;
-                    model.country = data.country;
-                    model.created_by = data.created_by;
-                    model.description = data.description;
-                    model.email = data.email;
-                    model.file_name = data.file_name;
+                    asset.mime_type = data.mime_type;
+                    asset.country = data.country;
+                    asset.created_by = data.created_by;
+                    asset.description = data.description;
+                    asset.email = data.email;
+                    asset.file_name = data.file_name;
                 }
             }
 
             _db.SaveChanges();
-            return data;
+            return asset;
         }
 
         [System.Web.Http.HttpPut]
