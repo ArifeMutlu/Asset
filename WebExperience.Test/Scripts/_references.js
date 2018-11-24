@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="angular.min.js" />
+/// <reference path="asset.js" />
 /// <reference path="bootstrap.bundle.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="DataTables/autoFill.bootstrap.js" />

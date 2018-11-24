@@ -10,59 +10,61 @@
 </head>
 <body>
     <br />
-    <div class="container">
-        <form id="assetFormId">
-            <input type="hidden" name="asset_id" value="@id" />
-            <input type="hidden" value="true" name="isNew" />
-            <div class="form-group">
-                <label for="file_name">File Name:</label>
-                <input type="text" class="form-control"  id="file_name" name="file_name">
-            </div>
-            <div class="form-group">
-                <label for="mime_type">Mime Type:</label>
-                <input type="text" class="form-control" id="mime_type" name="mime_type">
-            </div>
-            <div class="form-group">
-                <label for="created_by">Created By:</label>
-                <input type="text" class="form-control"  id="created_by" name="created_by">
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="text" class="form-control" id="email" name="email">
-            </div>
-            <div class="form-group">
-                <label for="country">country:</label>
-                <input type="text" class="form-control" id="country" name="country">
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea name="description" id="description" class="form-control"></textarea>
-            </div>
+<div class="container">
+    <div id="result"></div>
+    <form id="assetFormId">
+        <input type="hidden" name="asset_id" value="@id"/>
+        <input type="hidden" value="true" name="isNew"/>
+        <div class="form-group">
+            <label for="file_name">File Name:</label>
+            <input type="text" class="form-control  required" data-req="file_name is Required" id="file_name" name="file_name">
+        </div>
+        <div class="form-group">
+            <label for="mime_type">Mime Type:</label> 
+            <input type="text" class="form-control required" data-req="mime_type is Required" id="mime_type" name="mime_type">
+        </div>
+        <div class="form-group">
+            <label for="created_by">Created By:</label>
+            <input type="text" class="form-control  required" data-req="created_by is Required" id="created_by" name="created_by">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control required" data-req="email is Required" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="country">country:</label>
+            <input type="text" class="form-control required" data-req="country is Required" id="country" name="country">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea name="description" id="description" class="form-control"></textarea>
+        </div>
 
-            <button type="button" onclick="Save()" class="btn btn-default">Submit</button>
-        </form>
-    </div>
+        <button type="button" onclick="Save()" class="btn btn-default">Submit</button>
+    </form>
+</div>
 
 </body>
 
 <script>
     function Save() {
-        var model = $("#assetFormId").serialize();
-        $.ajax({
-            type: "POST",
-            url: "/api/Create",
-            data: model,
-            success: function (data) {
-                if (data == null) {
-                    alert("Fail");
-                }
-                else {
-                    alert("Success");
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                // TODO: Show error
-            }
+        var validateResult = validate.control({
+            element: $('#assetFormId .required'),
+            cElement: '#result'
         });
+        if (validateResult) {
+            var model = $("#assetFormId").serialize();
+            $.ajax({
+                type: "POST",
+                url: "/api/Create",
+                data: model,
+                success: function (data) {
+
+                },
+                error: function (xhr, textStatus, errorThrown) {
+
+                }
+            });
+        }
     }
 </script>

@@ -91,8 +91,8 @@ namespace WebExperience.Test.Controllers
             Mapper(assetdto, assetdb);
             _db.SaveChanges();
         }
-
-        [System.Web.Http.HttpDelete]
+        
+        [System.Web.Http.Route("api/DeleteAsset")]
         public void DeleteAsset(Guid id)
         {
             var assetdb = _db.assets.SingleOrDefault(a => a.asset_id == id);

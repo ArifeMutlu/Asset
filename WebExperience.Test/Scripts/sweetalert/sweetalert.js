@@ -144,7 +144,7 @@
                 showCancelButton: !1,
                 closeOnConfirm: !0,
                 closeOnCancel: !0,
-                confirmButtonText: "Tamam",
+                confirmButtonText: "Okey",
                 confirmButtonColor: "#8CD4F5",
                 cancelButtonText: "iptal",
                 imageUrl: null,
@@ -435,7 +435,7 @@
             //var header = $('#hdnNotfyTitle').val();
             //alert(header);
             //<span class=" fa fa-bell"></span>
-            var o = '<div class="sweet-overlay" tabIndex="-1" style="z-index: 99999;"></div><div class="sweet-alert"><div class="sa-icon sa-error">\n      <span class="sa-x-mark">\n        <span class="sa-line sa-left"></span>\n        <span class="sa-line sa-right"></span>\n      </span>\n    </div><div class="sa-icon sa-warning">\n      <span class="sa-body"></span>\n      <span class="sa-dot"></span>\n    </div><div class="sa-icon sa-info"></div><div class="sa-icon sa-success">\n      <span class="sa-line sa-tip"></span>\n      <span class="sa-line sa-long"></span>\n\n      <div class="sa-placeholder"></div>\n      <div class="sa-fix"></div>\n    </div><div class="sa-icon sa-custom"></div><h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type="text" tabIndex="3" />\n      <div class="sa-input-error"></div>\n    </fieldset><div class="sa-error-container">\n      <div class="icon">!</div>\n      <p>Not valid!</p>\n    </div><div class="sa-button-container">\n      <button class="cancel" tabIndex="2">Kapat</button>\n      <div class="sa-confirm-button-container">\n        <button class="confirm" tabIndex="1">Tamam</button><div class="la-ball-fall">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div></div>';
+            var o = '<div class="sweet-overlay" tabIndex="-1" style="z-index: 99999;"></div><div class="sweet-alert"><div class="sa-icon sa-error">\n      <span class="sa-x-mark">\n        <span class="sa-line sa-left"></span>\n        <span class="sa-line sa-right"></span>\n      </span>\n    </div><div class="sa-icon sa-warning">\n      <span class="sa-body"></span>\n      <span class="sa-dot"></span>\n    </div><div class="sa-icon sa-info"></div><div class="sa-icon sa-success">\n      <span class="sa-line sa-tip"></span>\n      <span class="sa-line sa-long"></span>\n\n      <div class="sa-placeholder"></div>\n      <div class="sa-fix"></div>\n    </div><div class="sa-icon sa-custom"></div><h2>Title</h2>\n    <p>Text</p>\n    <fieldset>\n      <input type="text" tabIndex="3" />\n      <div class="sa-input-error"></div>\n    </fieldset><div class="sa-error-container">\n      <div class="icon">!</div>\n      <p>Not valid!</p>\n    </div><div class="sa-button-container">\n      <button class="cancel" tabIndex="2">Kapat</button>\n      <div class="sa-confirm-button-container">\n        <button class="confirm" tabIndex="1">Okey</button><div class="la-ball-fall">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div></div>';
             n["default"] = o, t.exports = n["default"]
         }, {}],
         8: [function(e, t, o) {

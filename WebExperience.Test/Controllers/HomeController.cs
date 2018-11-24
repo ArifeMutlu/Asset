@@ -27,5 +27,11 @@ namespace WebExperience.Test.Controllers
         {
             return View();
         }
+        public ActionResult DeleteAsset(Guid id)
+        {
+            var model=new AssetController();
+            model.DeleteAsset(id);
+            return RedirectToAction("Index","Home");
+        }
     }
 }
