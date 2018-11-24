@@ -1,64 +1,183 @@
-﻿
-@{
-    ViewBag.Title = "Asset";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Home Page";
+
 }
-@model List<WebExperience.Test.Models.Asset>
-<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
-<table id="assets" class="table table-bordered table-hover">
-    <thead>
-    <tr>
-        <th>Asset Id</th>
-    </tr>
-    </thead>
-    @*<tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.asset_id</td>
-                <td>@item.file_name</td>
-            </tr>
+<style>
+    table, th, td {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
         }
-    </tbody>*@
-</table>
+
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+</style>
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/jquery.dataTables.js"></script>
+<link rel="stylesheet" ; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+<body ng-app="myApp" ng-controller="AssetCtrl">
+    <br />
+    <button class="w3-btn w3-green w3-ripple " ng-click="editAsset('new')">&#9998; Create New User</button>
+    <form ng-hide="hideform" ng-submit="submit()">
+        <div id="result"></div>
+
+        <h3 ng-show="edit">Create New User:</h3>
+        <h3 ng-hide="edit">Edit User:</h3>
+
+        <label>File Name:</label>
+        <input class="w3-input w3-border" type="text" ng-model="file_name" ng-disabled="!edit" placeholder="file_name">
+        <br>
+        <label>Mime_type:</label>
+        <input class="w3-input w3-border" type="text" ng-model="mime_type" ng-disabled="!edit" placeholder="mime_type">
+        <br>
+        <label>created_by:</label>
+        <input class="w3-input w3-border" type="text" ng-model="created_by" ng-disabled="!edit" placeholder="created_by">
+        <br>
+        <label>Email:</label>
+        <input class="w3-input w3-border" type="text" ng-model="email" ng-disabled="!edit" placeholder="email">
+        <br>
+        <label>Country:</label>
+        <input class="w3-input w3-border" type="text" ng-model="country" ng-disabled="!edit" placeholder="country">
+        <br>
+        <label>Description:</label>
+        <input class="w3-input w3-border" type="text" ng-model="description" ng-disabled="!edit" placeholder="description">
+
+        <br>
+        <input ng-disabled="!edit" type="submit" id="submit" value="Submit" />
+    </form>
+    <table class="table table-bordered table-hover" style="width:800px">
+        <tr>
+            <th>#</th>
+            <td>Education</td>
+            <td></td>
+        </tr>
+
+        <tr data-ng-repeat="aa in assets track by $index">
+            <td><strong data-ng-hide="education.editMode">{{ aa.asset_id }}</strong></td>
+            <td>
+                <p data-ng-hide="education.editMode">{{ aa.asset_id }}</p>
+                <input data-ng-show="education.editMode" type="text" data-ng-model="education.education1" />
+            </td>
+            <td>
+                <button class="" ng-click="editAsset(aa.asset_id)">&#9998; Edit</button>
+                <button class="" ng-click="detailAsset(aa.asset_id)"> Detail</button>
+            </td>
+        </tr>
+    </table>
+
+</body>
 <script>
-    //$("#assets").dataTable();
-    $(document).ready(function () {
-        //$('#assets').DataTable({
-        //    ajax: {
-        //        url:"Get"
-        //    },
-        //    colums: [
-        //        {
-        //            data: "asset_id"
+    var app = angular.module("myApp", ["ngTable", "ngTableDemos"]);
 
-        //        },
-        //        {
-        //            data: "file_name"
+    app.controller("AssetCtrl", demoController);
+    demoController.$inject = ["NgTableParams", "ngTableSimpleMediumList"];
 
-        //        }
-        //    ]
-        //});
-            var complete = $('#assets').DataTable(
-                {
+    function demoController(NgTableParams, simpleList) {
+        this.defaultConfigTableParams = new NgTableParams({}, { dataset: simpleList});
+        this.customConfigParams = createUsingFullOptions();
 
-                    "serverSide": true,
-                    "destroy": true,
-                    "processing": true,
-                    "ajax":
-                    {
-                        url: "http://localhost:2933/Api/Get",
-                    method: "POST"
-                },
-                "columns": [
-                    { "data": "asset_id" }
+        function createUsingFullOptions() {
+            var initialParams = {
+                count: 5 // initial page size
+            };
+            var initialSettings = {
+                // page size buttons (right set of buttons in demo)
+                counts: [],
+                // determines the pager buttons (left set of buttons in demo)
+                paginationMaxBlocks: 13,
+                paginationMinBlocks: 2,
+                dataset: simpleList
+            };
+            return new NgTableParams(initialParams, initialSettings);
+        }
+    //angular.module('myApp', ['ngTable']).controller('AssetCtrl', function ($scope, $http) {
+    //    $scope.asset_id = '';
+    //    $scope.file_name = '';
+    //    $scope.mime_type = '';
+    //    $scope.created_by = '';
+    //    $scope.email = '';
+    //    $scope.country = '';
+    //    $scope.description = '';
+    //    $http.get("/api/Get").then(function (response) {
+    //        $scope.assets = response.data;
+    //    });
+    //    $scope.edit = true;
+    //    $scope.error = false;
+    //    $scope.incomplete = false;
+    //    $scope.hideform = true;
+    //    $scope.editAsset = function (id) {
+    //        $scope.hideform = false;
+    //        if (id == 'new') {
+    //            $scope.edit = true;
+    //            $scope.incomplete = true;
+    //            $scope.asset_id = '';
+    //            $scope.file_name = '';
+    //            $scope.mime_type = '';
+    //            $scope.created_by = '';
+    //            $scope.email = '';
+    //            $scope.country = '';
+    //            $scope.description = '';
+    //        } else {
+    //            $scope.edit = true;
+    //            $http.get("/api/Get/" + id).then(function (response) {
+    //                $scope.edit = true;
+    //                $scope.asset_id = response.data.asset_id;
+    //                $scope.file_name = response.data.file_name;
+    //                $scope.mime_type = response.data.mime_type;
+    //                $scope.created_by = response.data.created_by;
+    //                $scope.email = response.data.email;
+    //                $scope.country = response.data.country;
+    //                $scope.description = response.data.description;
+    //            });
+    //        }
+    //    };
+    //    $scope.detailAsset = function (id) {
+    //        $scope.hideform = false;
+    //        $http.get("/api/Get/" + id).then(function (response) {
+    //            $scope.edit = false;
+    //            $scope.asset_id = response.data.asset_id;
+    //            $scope.file_name = response.data.file_name;
+    //            $scope.mime_type = response.data.mime_type;
+    //            $scope.created_by = response.data.created_by;
+    //            $scope.email = response.data.email;
+    //            $scope.country = response.data.country;
+    //            $scope.description = response.data.description;
+    //        });
+    //    };
 
-                ]
-            }
+    //    $scope.submit = function () {
+    //        var data = {
+    //            asset_id: this.asset_id,
+    //            file_name: this.file_name,
+    //            mime_type: this.mime_type,
+    //            created_by: this.created_by,
+    //            email: this.email,
+    //            country: this.country,
+    //            description: this.description,
 
-        );
-    });
+    //        }
+    //        if (data.asset_id == '') {
+    //            data.isNew = true;
+    //        }
+    //        $http.post('/api/Create', data).success(function (data) {
+    //            alert("Added Successfully!!");
+    //            $http.get("/api/Get").then(function (response) {
+    //                $scope.assets = response.data;
+    //            });
+    //        }).error(function () {
+    //            $scope.error = "An Error has occured while Adding Friend! ";
+    //        });
+
+    //    };
+
+    //});
 
 
 </script>
