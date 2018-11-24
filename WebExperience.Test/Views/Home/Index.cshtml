@@ -1,170 +1,52 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-
+﻿
+@{
+    ViewBag.Title = "Index_jquerydatatable";
 }
-<style>
-    table, th, td {
-        border: 1px solid grey;
-        border-collapse: collapse;
-        padding: 5px;
-    }
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
 
-        table tr:nth-child(odd) {
-            background-color: #f1f1f1;
-        }
+<h3>jQuery DataTables</h3>
+<a href="https://www.gyrocode.com/articles/tag/jquery-datatables/">See more articles about jQuery DataTables</a> on <a href="https://www.gyrocode.com/articles/">Gyrocode.com</a><hr>
 
-        table tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-</style>
-<script src="~/Scripts/angular.min.js"></script>
-<body ng-app="myApp" ng-controller="AssetCtrl">
+<p>
+    <button type="button" id="btn-reload">Reload</button>
+</p>
 
-    <div class="w3-container">
-
-        <h3>Users</h3>
-        <br />
-        <table class="table">
-            <tr ng-repeat="row in assets.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-                <td>
-                    <button class="" ng-click="editAsset(row.asset_id)">&#9998; Edit</button>
-                    <button class="" ng-click="detailAsset(row.asset_id)"> Detail</button>
-                </td>
-                <td>{{row.file_name}}</td>
-                <td>{{row.mime_type}}</td>
-            </tr>
-        </table>
-        <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" items-per-page="itemsPerPage"></pagination>
-       @* <pre>The selected page no: {{currentPage}}</pre>*@
-        <br>
-        <button class="w3-btn w3-green w3-ripple " ng-click="editAsset('new')">&#9998; Create New User</button>
-        <form ng-hide="hideform" ng-submit="submit()">
-            <h3 ng-show="edit">Create New User:</h3>
-            <h3 ng-hide="edit">Edit User:</h3>
-
-            <label>File Name:</label>
-            <input class="w3-input w3-border" type="text" ng-model="file_name" ng-disabled="!edit" placeholder="file_name">
-            <br>
-            <label>Mime_type:</label>
-            <input class="w3-input w3-border" type="text" ng-model="mime_type" ng-disabled="!edit" placeholder="mime_type">
-            <br>
-            <label>created_by:</label>
-            <input class="w3-input w3-border" type="text" ng-model="created_by" ng-disabled="!edit" placeholder="created_by">
-            <br>
-            <label>Email:</label>
-            <input class="w3-input w3-border" type="text" ng-model="email" ng-disabled="!edit" placeholder="email">
-            <br>
-            <label>Country:</label>
-            <input class="w3-input w3-border" type="text" ng-model="country" ng-disabled="!edit" placeholder="country">
-            <br>
-            <label>Description:</label>
-            <input class="w3-input w3-border" type="text" ng-model="description" ng-disabled="!edit" placeholder="description">
-
-            <br>
-            <input ng-disabled="!edit" type="submit" id="submit" value="Submit" />
-        </form>
-
-    </div>
-</body>
+<table id="example" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>asset_id</th>
+            <th>file_name</th>
+            <th>mime_type</th>
+            <th>created_by</th>
+            <th>email</th>
+            <th>country</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+</table>
+<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
 <script>
-   
-    angular.module('myApp', []).controller('AssetCtrl', function ($scope, $http) {
-        $scope.asset_id = '';
-        $scope.file_name = '';
-        $scope.mime_type = '';
-        $scope.created_by = '';
-        $scope.email = '';
-        $scope.country = '';
-        $scope.description = '';
-        $http.get("/api/Get").then(function (response) {
-            $scope.assets = response.data;
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "deferRender": true,
+            "paging" : true,
+            "ordering": false,
+            "searching": true,
+            "stateSave": true,
+            "ajax": {
+                "url": "http://localhost:2933/api/Get",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "asset_id", "name": "asset_id" },
+                { "data": "file_name", "name": "file_name" },
+                { "data": "mime_type", "name": "mime_type" },
+                { "data": "created_by", "name": "created_by" },
+                { "data": "email", "name": "email" },
+                { "data": "country", "name": "country" }
+                { "data": }
+            ]
         });
-        $scope.edit = true;
-        $scope.error = false;
-        $scope.incomplete = false;
-        $scope.hideform = true;
-        $scope.editAsset = function (id) {
-            $scope.hideform = false;
-            if (id == 'new') {
-                $scope.edit = true;
-                $scope.incomplete = true;
-                $scope.asset_id = '';
-                $scope.file_name = '';
-                $scope.mime_type = '';
-                $scope.created_by = '';
-                $scope.email = '';
-                $scope.country = '';
-                $scope.description = '';
-            } else {
-                $scope.edit = true;
-                $http.get("/api/Get/" + id).then(function (response) {
-                    $scope.edit = true;
-                    $scope.asset_id = response.data.asset_id;
-                    $scope.file_name = response.data.file_name;
-                    $scope.mime_type = response.data.mime_type;
-                    $scope.created_by = response.data.created_by;
-                    $scope.email = response.data.email;
-                    $scope.country = response.data.country;
-                    $scope.description = response.data.description;
-                });
-            }
-        };
-        $scope.detailAsset = function (id) {
-            $scope.hideform = false;
-            $http.get("/api/Get/" + id).then(function (response) {
-                $scope.edit = false;
-                $scope.asset_id = response.data.asset_id;
-                $scope.file_name = response.data.file_name;
-                $scope.mime_type = response.data.mime_type;
-                $scope.created_by = response.data.created_by;
-                $scope.email = response.data.email;
-                $scope.country = response.data.country;
-                $scope.description = response.data.description;
-            });
-        };
-
-        $scope.submit = function () {
-            var data = {
-                asset_id: this.asset_id,
-                file_name: this.file_name,
-                mime_type: this.mime_type,
-                created_by: this.created_by,
-                email: this.email,
-                country: this.country,
-                description: this.description
-            }
-            $http.post('/api/Create', data).then(function (response) {
-                $http.get("/api/Get").then(function (response) {
-                    $scope.assets = response.data;
-                });
-            });
-           
-        };
-        
-        $http.get("/api/Get").then(function (response) {
-            debugger;
-            $scope.assets = response.data;
-            $scope.totalItems = $scope.assets.length;
-
-        });
-        $scope.viewby = 10;
-        $scope.currentPage = 1;
-        $scope.itemsPerPage = $scope.viewby;
-        $scope.maxSize = 5; //Number of pager buttons to show
-
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
-
-        $scope.pageChanged = function () {
-            console.log('Page changed to: ' + $scope.currentPage);
-        };
-
-        $scope.setItemsPerPage = function (num) {
-            $scope.itemsPerPage = num;
-            $scope.currentPage = 1; //reset to first page
-        }
     });
-
 
 </script>

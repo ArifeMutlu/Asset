@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -31,11 +32,12 @@ namespace WebExperience.Test.Controllers
         }
 
         [System.Web.Http.Route("api/Get")]
-        public List<Asset> Get()
+        public IEnumerable<Asset> Get()
         {
-            var query = _db.assets.Take(20).ToList();
+            var query = _db.assets.ToList();
             return query;
         }
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("api/Get/{id}")]
         public Asset Get(Guid id)
