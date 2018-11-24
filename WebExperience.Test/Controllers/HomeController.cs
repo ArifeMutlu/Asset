@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using WebExperience.Test.Models;
 
@@ -11,7 +12,7 @@ namespace WebExperience.Test.Controllers
 
             return View();
         }
-        public ActionResult Asset()
+        public ActionResult Asset(Guid id)
         {
             return View();
         }

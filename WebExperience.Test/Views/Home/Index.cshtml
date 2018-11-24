@@ -37,8 +37,10 @@
                 "dataSrc": ""
             },
             "columns": [
-                { "data": "asset_id", "name": "asset_id",render: function(data,type,asset) {
-                        return "<a href='/Home/Asset/" + asset.asset_id + "'>" + asset.asset_id + "/>";
+                {
+                    "data": "asset_id",
+                    render: function (data,type,asset) {
+                        return "<a href='/Home/Asset/"+asset.asset_id+"'> Edit</button>";
                     }
                 },
                 { "data": "file_name", "name": "file_name" },
@@ -50,4 +52,8 @@
         });
     });
 
+    function GetAsset(id) {
+        debugger;
+        location.href = "/Home/Asset/" + id;
+    }
 </script>

@@ -1,6 +1,4 @@
-﻿
-<!DOCTYPE html>
-<html lang="en">
+﻿@model WebExperience.Test.Models.dtos.Assetdto
 <head>
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
@@ -14,15 +12,28 @@
 <div class="container">
     <form id="assetıd">
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+            <label for="file_name">File Name:</label>
+            <input type="text" class="form-control" id="file_name" name="file_name">
         </div>
         <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+            <label for="mime_type">Mime Type:</label>
+            <input type="text" class="form-control" id="mime_type" name="mime_type">
         </div>
-        <div class="checkbox">
-            <label><input type="checkbox" name="remember"> Remember me</label>
+        <div class="form-group">
+            <label for="created_by">Created By:</label>
+            <input type="text" class="form-control" id="created_by" name="created_by">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="country">country:</label>
+            <input type="text" class="form-control" id="country" name="country">
+        </div>
+        <div class="form-group">
+            <label for="country">country:</label>
+         <textarea name=""></textarea>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
