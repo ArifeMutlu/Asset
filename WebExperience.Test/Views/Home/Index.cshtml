@@ -1,1 +1,50 @@
 ﻿
+@{
+    ViewBag.Title = "Index_jquerydatatable";
+}
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+<h3>jQuery DataTables</h3>
+<a href="https://www.gyrocode.com/articles/tag/jquery-datatables/">See more articles about jQuery DataTables</a> on <a href="https://www.gyrocode.com/articles/">Gyrocode.com</a><hr>
+
+<p>
+    <button type="button" id="btn-reload">Reload</button>
+</p>
+
+<table id="example" class="display" cellspacing="0">
+    <thead>
+        <tr>
+            <th>asset_id</th>
+            <th>file_name</th>
+            <th>mime_type</th>
+            <th>created_by</th>
+            <th>email</th>
+            <th>country</th>
+        </tr>
+    </thead>
+</table>
+<script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "deferRender": true,
+            "paging" : true,
+            "ordering": false,
+            "searching": true,
+            "stateSave": true,
+            "ajax": {
+                "url": "http://localhost:2933/api/Get",
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "asset_id", "name": "asset_id" },
+                { "data": "file_name", "name": "file_name" },
+                { "data": "mime_type", "name": "mime_type" },
+                { "data": "created_by", "name": "created_by" },
+                { "data": "email", "name": "email" },
+                { "data": "country", "name": "country" }
+            ]
+        });
+    });
+
+</script>

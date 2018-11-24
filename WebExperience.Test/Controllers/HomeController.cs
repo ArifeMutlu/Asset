@@ -16,11 +16,11 @@ namespace WebExperience.Test.Controllers
             return View();
         }
 
-        public List<Asset> Get()
-        {
-            var model=new AssetController();
-            return model.Get();
-        }
+        //public List<Asset> Get()
+        //{
+        //    var model=new AssetController();
+        //    return model.Get();
+        //}
 
     }
 }
